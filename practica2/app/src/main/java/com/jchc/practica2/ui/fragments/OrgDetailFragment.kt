@@ -14,6 +14,10 @@ import com.jchc.practica2.data.OrgRepository
 import com.jchc.practica2.data.remote.model.OrgDetailDto
 import com.jchc.practica2.databinding.FragmentOrgDetailBinding
 import com.jchc.practica2.utils.Constants
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -30,6 +34,9 @@ class OrgDetailFragment: Fragment() {
     private var org_id: String? = null
 
     private lateinit var repository: OrgRepository
+
+    private lateinit var youTubePlayerView: YouTubePlayerView
+    private lateinit var youTubePlayerListener: YouTubePlayerListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +65,9 @@ class OrgDetailFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         repository = (requireActivity().application as EsportsRFApp).repository
 
+        youTubePlayerView = binding.ytPlayerView
+
+
         lifecycleScope.launch {
             org_id?.let { id ->
                 val call: Call<OrgDetailDto> = repository.getOrgDetail(id)
@@ -73,12 +83,22 @@ class OrgDetailFragment: Fragment() {
                             tvCountry.text = getString(R.string.country) + " " + response.body()?.country
                             tvTricode.text = getString(R.string.tricode) + " " + response.body()?.tricode
                             tvValcoach.text = getString(R.string.valCoach) + " " + response.body()?.valCoach
-
                             tvValRoster.text = response.body()?.valRoster?.toString()
 
                             Glide.with(requireActivity())
                                 .load(response.body()?.image)
                                 .into(ivImage)
+
+                            youTubePlayerView = binding.ytPlayerView
+                            //lifecycle.addObserver(youTubePlayerView)
+
+                            youTubePlayerView.addYouTubePlayerListener(object: AbstractYouTubePlayerListener(){
+                                override fun onReady(youTubePlayer: YouTubePlayer) {
+                                    var videoUrl: String = response.body()?.ytvideo.toString()
+                                    youTubePlayer.cueVideo(videoUrl, 0f)
+                                }
+                            })
+
                         }
                     }
 

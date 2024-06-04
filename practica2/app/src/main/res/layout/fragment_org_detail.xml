@@ -117,6 +117,14 @@
                         android:textColor="@color/white"
                         android:textSize="20sp"
                         tools:text="ValRoster" />
+
+                    <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                        android:id="@+id/ytPlayerView"
+                        android:layout_marginTop="30dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="225dp"
+                        />
+
                 </LinearLayout>
             </ScrollView>
 

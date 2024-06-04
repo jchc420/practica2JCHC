@@ -17,7 +17,9 @@ data class OrgDetailDto(
     @SerializedName("val_coach")
     val valCoach: String? = null,
     @SerializedName("val_roster")
-    val valRoster: List<ValRoster>? = null
+    val valRoster: List<ValRoster>? = null,
+    @SerializedName("ytvideo")
+    val ytvideo: String? = null
 )
 
 data class ValRoster(

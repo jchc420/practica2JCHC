@@ -1,5 +1,6 @@
 package com.jchc.practica2.ui.fragments
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -28,6 +29,9 @@ class OrgListFragment: Fragment() {
 
     private lateinit var repository: OrgRepository
 
+    //para la canción de fondo
+    private lateinit var mediaPlayer: MediaPlayer
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -51,6 +55,15 @@ class OrgListFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         repository = (requireActivity().application as EsportsRFApp).repository
+
+        if (!this::mediaPlayer.isInitialized){
+            mediaPlayer = MediaPlayer.create(requireContext(), R.raw.valsong )
+        }
+        if (mediaPlayer.isPlaying){
+            mediaPlayer.pause()
+            mediaPlayer.seekTo(0)
+        }
+        mediaPlayer.start()
 
         lifecycleScope.launch {
             //https://private-87ff9c-jchc.apiary-mock.com/org/org_list

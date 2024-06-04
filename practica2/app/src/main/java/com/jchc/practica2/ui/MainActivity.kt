@@ -1,9 +1,11 @@
 package com.jchc.practica2.ui
 
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.lifecycleScope
 import com.jchc.practica2.R
 import com.jchc.practica2.data.OrgRepository
@@ -35,6 +37,7 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.fragment_container, OrgListFragment())
                 .commit()
         }
+
 
         retrofit = RetrofitHelper().getRetrofit()
         repository = OrgRepository(retrofit)
