@@ -19,7 +19,11 @@ data class OrgDetailDto(
     @SerializedName("val_roster")
     val valRoster: List<ValRoster>? = null,
     @SerializedName("ytvideo")
-    val ytvideo: String? = null
+    val ytvideo: String? = null,
+    @SerializedName("lat")
+    val lat: Double? = null,
+    @SerializedName("long")
+    val long: Double? = null,
 )
 
 data class ValRoster(

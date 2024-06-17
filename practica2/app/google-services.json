@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "476671603329",
+    "project_id": "prac2-esportsorg",
+    "storage_bucket": "prac2-esportsorg.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:476671603329:android:b58da3edbeef12d0ea9380",
+        "android_client_info": {
+          "package_name": "com.jchc.practica2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKL3EJ1FJqpiQmqcviHAmIRH6WeOVeeC0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

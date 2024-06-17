@@ -29,9 +29,6 @@ class OrgListFragment: Fragment() {
 
     private lateinit var repository: OrgRepository
 
-    //para la canción de fondo
-    private lateinit var mediaPlayer: MediaPlayer
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -51,19 +48,18 @@ class OrgListFragment: Fragment() {
         _binding = null
     }
 
+    override fun onPause() {
+        super.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
     //El usuario ya ve el fragment en pantalla
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         repository = (requireActivity().application as EsportsRFApp).repository
-
-        if (!this::mediaPlayer.isInitialized){
-            mediaPlayer = MediaPlayer.create(requireContext(), R.raw.valsong )
-        }
-        if (mediaPlayer.isPlaying){
-            mediaPlayer.pause()
-            mediaPlayer.seekTo(0)
-        }
-        mediaPlayer.start()
 
         lifecycleScope.launch {
             //https://private-87ff9c-jchc.apiary-mock.com/org/org_list

@@ -1,13 +1,23 @@
 package com.jchc.practica2.ui.fragments
 
+import android.location.Location
+import android.location.LocationListener
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.jchc.practica2.R
 import com.jchc.practica2.application.EsportsRFApp
 import com.jchc.practica2.data.OrgRepository
@@ -26,7 +36,7 @@ import retrofit2.Response
 
 private const val ORG_ID = "org_id"
 
-class OrgDetailFragment: Fragment() {
+class OrgDetailFragment: Fragment(), OnMapReadyCallback {
 
     private var _binding: FragmentOrgDetailBinding? = null
     private val binding get() = _binding!!
@@ -38,12 +48,16 @@ class OrgDetailFragment: Fragment() {
     private lateinit var youTubePlayerView: YouTubePlayerView
     private lateinit var youTubePlayerListener: YouTubePlayerListener
 
+    //para tener 1 instancia al mapa de manera global
+    private lateinit var map: GoogleMap
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let { args ->
             org_id = args.getString(ORG_ID)
             Log.d(Constants.LOGTAG, "ID RECIBIDO: $org_id")
         }
+
     }
 
     override fun onCreateView(
@@ -53,6 +67,8 @@ class OrgDetailFragment: Fragment() {
     ): View? {
         //Inflate the layout for this fragment
         _binding = FragmentOrgDetailBinding.inflate(inflater, container, false)
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
         return binding.root
     }
 
@@ -66,7 +82,6 @@ class OrgDetailFragment: Fragment() {
         repository = (requireActivity().application as EsportsRFApp).repository
 
         youTubePlayerView = binding.ytPlayerView
-
 
         lifecycleScope.launch {
             org_id?.let { id ->
@@ -84,6 +99,11 @@ class OrgDetailFragment: Fragment() {
                             tvTricode.text = getString(R.string.tricode) + " " + response.body()?.tricode
                             tvValcoach.text = getString(R.string.valCoach) + " " + response.body()?.valCoach
                             tvValRoster.text = response.body()?.valRoster?.toString()
+                            var lat = response.body()?.lat
+                            var long = response.body()?.long
+                            if (lat != null && long != null ) {
+                                createMarker(lat, long)
+                            }
 
                             Glide.with(requireActivity())
                                 .load(response.body()?.image)
@@ -122,5 +142,25 @@ class OrgDetailFragment: Fragment() {
                     putString(ORG_ID, orgId)
                 }
             }
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        map = googleMap
+        //createMarker(19.389109290598746, -99.16366790850049)
+    }
+
+    private fun createMarker(lat: Double, long: Double){
+        val coordinates = LatLng(lat, long)
+
+        val marker = MarkerOptions()
+            .position(coordinates)
+
+        map.addMarker(marker)
+
+        map.animateCamera(
+            CameraUpdateFactory.newLatLngZoom(coordinates, 8f),
+            4000,
+            null
+        )
     }
 }

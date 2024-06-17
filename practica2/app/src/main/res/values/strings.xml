@@ -3,4 +3,15 @@
     <string name="tricode">Tricode:  </string>
     <string name="country">Country:  </string>
     <string name="valCoach">Valorant Coach:  </string>
+    <string name="orgs">ORGS</string>
+    <string name="sports">sports</string>
+    <string name="e">E-</string>
+    <string name="email">Correo electrónico</string>
+    <string name="password">Contraseña</string>
+    <string name="login">Ingresar</string>
+    <string name="register">Registrarse</string>
+    <string name="resetPassword">¿Olvidó su contraseña? Restablecer aquí</string>
+    <string name="signOut">Cerrar Sesión</string>
+    <string name="loggedUser">Usuario:</string>
+    <string name="noUserSession">Continuar sin iniciar sesión</string>
 </resources>

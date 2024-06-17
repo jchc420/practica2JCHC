@@ -125,6 +125,15 @@
                         android:layout_height="225dp"
                         />
 
+                    <fragment
+                        android:id="@+id/map"
+                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="450dp"
+                        app:layout_constraintBottom_toTopOf="@+id/ytPlayerView"
+                        android:layout_marginTop="25dp"
+                        />
+
                 </LinearLayout>
             </ScrollView>
 
